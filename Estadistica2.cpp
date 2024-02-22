@@ -23,6 +23,7 @@ int main()
     cout << "1. Afegir Cyberware" << endl;
     cout << "2. Mostrar Cyberware" << endl;
     cout << "3. Mostrar Mitjana dels preus" << endl;
+    cout << "4. Mostrar La Moda de la perdua d'humanitat" << endl;
     cin >> opcio;
 
     switch (opcio) {
@@ -76,8 +77,8 @@ int main()
             int sumaPreus = 0;
             int comptador = 0;
             while (fs.read((char*)&c, sizeof(Ciberware))) {
-                sumaPreus += c.preu; 
-                comptador++; 
+                sumaPreus += c.preu;
+                comptador++;
             }
             fs.close();
             if (comptador > 0) {
@@ -92,6 +93,36 @@ int main()
             cout << "Error no es pot llegir el fitxer." << endl;
         }
         break;
+        
+    }
+    case 4:
+    {
+        fs.open("cyberdades.dat", ios::in | ios::binary);
+        if (fs.is_open()) {
+            Ciberware c;
+            vector<int> valorsPerdua;
+            vector<int> freqPerdua;
+
+            while (fs.read((char*)&c, sizeof(Ciberware))) {
+                valorsPerdua.push_back(c.perdua);
+            }
+            fs.close();
+
+            for (int i = 0; i < valorsPerdua.size(); ++i) {
+                int freq = std::count(valorsPerdua.begin(), valorsPerdua.end(), valorsPerdua[i]);
+                freqPerdua.push_back(freq);
+            }
+
+            int maxFreq = *std::max_element(freqPerdua.begin(), freqPerdua.end());
+            int modaPerdua = valorsPerdua[std::distance(freqPerdua.begin(), std::find(freqPerdua.begin(), freqPerdua.end(), maxFreq))];
+
+            cout << "La moda de la perdua d'humanitat es: " << modaPerdua << endl;
+        }
+        else {
+            cout << "Error no es pot llegir el fitxer." << endl;
+        }
+        break;
+
     }
 
     default:
@@ -101,4 +132,3 @@ int main()
 
     return  0;
 }
-
