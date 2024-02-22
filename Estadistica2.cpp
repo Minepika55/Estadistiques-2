@@ -26,6 +26,7 @@ int main() {
         cout << "3. Mostrar Mitjana dels preus" << endl;
         cout << "4. Mostrar La Moda de la perdua d'humanitat" << endl;
         cout << "5. Esborrar un Cyberware" << endl;
+        cout << "6. Editar un Cyberware ja existent" << endl;
         cin >> opcio;
 
         switch (opcio) {
@@ -178,6 +179,59 @@ int main() {
             }
         }
               break;
+
+        case 6: {
+            char Cyberwaremod[20];
+            cout << "Introdueix el nom del Cyberware que vols editar: ";
+            cin.ignore();
+            cin.getline(Cyberwaremod, 20);
+
+            fs.open("cyberdades.dat", ios::binary | ios::in);
+            if (!fs.is_open()) {
+                cout << "ERROR No es pot obrir el fitxer." << endl;
+            }
+            else {
+                vector<Ciberware> Ciberwaremodificat;
+                Ciberware c;
+                bool modificat = false;
+
+                while (fs.read((char*)&c, sizeof(Ciberware))) {
+                    if (strcmp(Cyberwaremod, c.nom) == 0) {
+                        modificat = true;
+                        cout << "Modificant el Cyberware: " << c.nom << endl;
+                        cout << "Nou nom (enter per no canviar-lo): ";
+                        cin.getline(c.nom, 20);
+                        cout << "Nou local d'instalacio (enter per no canviar-lo): ";
+                        cin.getline(c.instal, 20);
+                        cout << "Nou preu (enter per no canviar-lo): ";
+                        cin >> c.preu;
+                        cout << "Nova perdua d'humanitat (enter per no canviar-lo): ";
+                        cin >> c.perdua;
+                        cin.ignore();
+                    }
+                    Ciberwaremodificat.push_back(c);
+                }
+                fs.close();
+
+                if (!modificat) {
+                    cout << "ERROR el Cyberware no s'ha trobat." << endl;
+                }
+                else {
+                    fs.open("cyberdades.dat", ios::binary | ios::out);
+                    if (!fs.is_open()) {
+                        cout << "ERROR No es pot obrir el fitxer." << endl;
+                    }
+                    else {
+                        for (const auto& c : Ciberwaremodificat) {
+                            fs.write((char*)&c, sizeof(Ciberware));
+                        }
+                        fs.close();
+                        cout << "Cyberware modificat sense problemes." << endl;
+                    }
+                }
+            }
+            break;
+        }
         default:
             cout << "ERROR torna a introduir una opcio.";
             break;
