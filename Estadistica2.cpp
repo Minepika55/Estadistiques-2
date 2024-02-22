@@ -142,13 +142,13 @@ int main() {
                     if (strcmp(Cyberwaremod, c.nom) == 0) {
                         modificat = true;
                         cout << "Modificant el Cyberware: " << c.nom << endl;
-                        cout << "Nou nom (enter per no canviar-lo): ";
+                        cout << "Nou nom: ";
                         cin.getline(c.nom, 20);
-                        cout << "Nou local d'instalacio (enter per no canviar-lo): ";
+                        cout << "Nou local d'instalacio: ";
                         cin.getline(c.instal, 20);
-                        cout << "Nou preu (enter per no canviar-lo): ";
+                        cout << "Nou preu: ";
                         cin >> c.preu;
-                        cout << "Nova perdua d'humanitat (enter per no canviar-lo): ";
+                        cout << "Nova perdua d'humanitat: ";
                         cin >> c.perdua;
                         cin.ignore();
                     }
