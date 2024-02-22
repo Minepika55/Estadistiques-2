@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -28,6 +28,7 @@ int main()
         cout << "2. Mostrar Cyberware" << endl;
         cout << "3. Mostrar Mitjana dels preus" << endl;
         cout << "4. Mostrar La Moda de la perdua d'humanitat" << endl;
+        cout << "5. Esborrar un Cyberware" << endl;
         cin >> opcio;
 
         switch (opcio) {
@@ -128,7 +129,10 @@ int main()
             break;
 
         }
+        case 5:
+        {
 
+        }
         default:
             cout << "Error torna a introduir una opcio.";
             break;
