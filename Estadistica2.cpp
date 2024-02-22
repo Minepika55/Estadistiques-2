@@ -68,15 +68,34 @@ int main()
         }
         break;
     }
-    case 3:
+    case  3:
     {
         fs.open("cyberdades.dat", ios::in | ios::binary);
-
-
-
+        if (fs.is_open()) {
+            Ciberware c;
+            int sumaPreus = 0;
+            int comptador = 0;
+            while (fs.read((char*)&c, sizeof(Ciberware))) {
+                sumaPreus += c.preu; 
+                comptador++; 
+            }
+            fs.close();
+            if (comptador > 0) {
+                double mitjanaPreus = static_cast<double>(sumaPreus) / comptador;
+                cout << "La mitjana dels preus dels Cyberware es: " << mitjanaPreus << endl;
+            }
+            else {
+                cout << "No es troben els preus." << endl;
+            }
+        }
+        else {
+            cout << "Error no es pot llegir el fitxer." << endl;
+        }
+        break;
     }
+
     default:
-        cout << "Invalid option";
+        cout << "Error torna a introduir una opcio.";
         break;
     }
 
